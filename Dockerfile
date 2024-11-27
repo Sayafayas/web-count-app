@@ -7,7 +7,7 @@ WORKDIR /app
 COPY . /app
 
 # Install dependencies
-RUN pip install flask pymysql python-dotenv --trusted-host=pypi.python.org --trusted-host=pypi.org --trusted-host=files.pythonhosted.org --disable-pip-version-check --no-cache-dir
+RUN pip install flask pymysql python-dotenv --no-cache-dir
 
 # Specify the command to run the app
 CMD ["python", "app.py"]
