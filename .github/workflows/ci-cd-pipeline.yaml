@@ -16,10 +16,16 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v2
 
-      # Extract the version from the Git tag
-      - name: Extract Version
-        id: extract_version
-        run: echo "TAG_NAME=${GITHUB_REF#refs/tags/}" >> $GITHUB_ENV
+      # Determine the Docker image tag
+      - name: Set Docker Image Tag
+        id: set_tag
+        run: |
+          if [[ "${GITHUB_REF}" == refs/tags/* ]]; then
+            TAG_NAME="${GITHUB_REF_NAME}"  # Use just the tag name
+          else
+            TAG_NAME="${GITHUB_REF_NAME}"  # Use the branch name (e.g., "main")
+          fi
+          echo "TAG_NAME=${TAG_NAME}" >> $GITHUB_ENV
 
       # Set up Docker Buildx
       - name: Set up Docker Buildx
